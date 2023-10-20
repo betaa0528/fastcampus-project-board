@@ -29,7 +29,10 @@ spring:
   sql:
     init:
       mode: always # data.sql 언제 작동시킬건지 해줌
-
+  data:
+    rest:
+      base-path: /api
+      detection-strategy: annotated
 server:
   port: 8081
 ---
