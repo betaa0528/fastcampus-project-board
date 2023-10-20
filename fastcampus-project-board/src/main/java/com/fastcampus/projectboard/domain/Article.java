@@ -23,9 +23,8 @@ import java.util.Set;
         @Index(columnList = "createdAt"),
         @Index(columnList = "createdBy")
 })
-@EntityListeners(AuditingEntityListener.class)
 @Entity
-public class Article {
+public class Article extends AuditingFields{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // mysql의 오토 인크리먼트는 아이덴티티 방식으로 만들어짐
     private Long id;
@@ -39,12 +38,6 @@ public class Article {
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
     @ToString.Exclude
     private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
-
-
-    @CreatedDate @Column(nullable = false) private LocalDateTime createdAt; // 생성일시
-    @CreatedBy @Column(nullable = false, length = 100) private String createdBy; // 생성자 , 누가 작성했는지에 대한 인증이나 로그인이없음. -> JapConfig에서 설정해준다
-    @LastModifiedDate @Column(nullable = false) private LocalDateTime modifiedAt; // 수정일시
-    @LastModifiedBy @Column(nullable = false, length = 100) private String modifiedBy; // 수정자
 
     protected Article() {} //jap entity는 hibernate구현체를 사용하는 기준 기본 생성자를 만들어줘야함(public, protected)
 
