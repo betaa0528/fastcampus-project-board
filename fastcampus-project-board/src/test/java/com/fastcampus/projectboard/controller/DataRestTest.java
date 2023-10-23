@@ -3,10 +3,8 @@ package com.fastcampus.projectboard.controller;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -14,8 +12,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.boot.actuate.health.Health.status;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 @Disabled("Spring Data REST 통합테스트는 불필요하므로 제외시킴")
@@ -85,5 +82,18 @@ public class DataRestTest {
         mvc.perform(get("/api/articleComments/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(content().contentType(MediaType.valueOf("application/hal+json")));
+    }
+    @DisplayName("[api] 회원 관련 API 는 일체 제공하지 않는다.")
+    @Test
+    void givenNothing_whenRequestingUserAccounts_thenThrowsException() throws Exception {
+        // Given
+
+        // When & Then
+        mvc.perform(get("/api/userAccounts")).andExpect(MockMvcResultMatchers.status().isNotFound());
+        mvc.perform(post("/api/userAccounts")).andExpect(MockMvcResultMatchers.status().isNotFound());
+        mvc.perform(put("/api/userAccounts")).andExpect(MockMvcResultMatchers.status().isNotFound());
+        mvc.perform(patch("/api/userAccounts")).andExpect(MockMvcResultMatchers.status().isNotFound());
+        mvc.perform(delete("/api/userAccounts")).andExpect(MockMvcResultMatchers.status().isNotFound());
+        mvc.perform(head("/api/userAccounts")).andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 }
