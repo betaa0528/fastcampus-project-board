@@ -16,7 +16,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Getter
-@ToString
+@ToString(callSuper = true)
 @Table(indexes = {
         @Index(columnList = "title"),
         @Index(columnList = "hashtag"),
@@ -24,31 +24,42 @@ import java.util.Set;
         @Index(columnList = "createdBy")
 })
 @Entity
-public class Article extends AuditingFields{
+public class Article extends AuditingFields {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // mysql의 오토 인크리먼트는 아이덴티티 방식으로 만들어짐
     private Long id;
 
-    @Setter @Column(nullable = false) private String title; // 제목
-    @Setter @Column(nullable = false, length = 10000) private String content; // 본문
+    @Setter
+    @ManyToOne(optional = false)
+    private UserAccount userAccount; // 유저정보 (ID)
 
-    @Setter private String hashtag; // 해시태그
+    @Setter
+    @Column(nullable = false)
+    private String title; // 제목
+    @Setter
+    @Column(nullable = false, length = 10000)
+    private String content; // 본문
 
-    @OrderBy("id")
+    @Setter
+    private String hashtag; // 해시태그
+
+    @OrderBy("createdAt DESC")
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
     @ToString.Exclude
     private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
 
-    protected Article() {} //jap entity는 hibernate구현체를 사용하는 기준 기본 생성자를 만들어줘야함(public, protected)
+    protected Article() {
+    } //jap entity는 hibernate구현체를 사용하는 기준 기본 생성자를 만들어줘야함(public, protected)
 
-    private Article(String title, String content, String hashtag) {
+    private Article(UserAccount userAccount, String title, String content, String hashtag) {
+        this.userAccount = userAccount;
         this.title = title;
         this.content = content;
         this.hashtag = hashtag;
     }
 
-    public static Article of(String title, String content, String hashtag) {
-        return new Article(title, content, hashtag);
+    public static Article of(UserAccount userAccount, String title, String content, String hashtag) {
+        return new Article(userAccount, title, content, hashtag);
     }
 
     @Override
