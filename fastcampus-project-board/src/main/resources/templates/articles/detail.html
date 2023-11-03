@@ -40,6 +40,15 @@
         </article>
     </div>
 
+    <div class="row g-5" id="article-buttons">
+        <form id="delete-article-form">
+            <div class="pb-5 d-grid gap-2 d-md-block">
+                <a class="btn btn-success me-md-2" role="button" id="update-article">수정</a>
+                <button class="btn btn-danger me-md-2" type="submit">삭제</button>
+            </div>
+        </form>
+    </div>
+
     <div class="row g-5">
         <section>
             <form class="row g-3 comment-form">
@@ -55,11 +64,11 @@
                 </div>
             </form>
 
-            <ul id="article-comments" class="row col-7">
+            <ul id="article-comments" class="row col-md-10 col-lg-8 pt-3">
                 <li>
-                    <div>
-                        <small><time>2022-01-01</time></small>
+                    <div class="row">
                         <strong>Minju</strong>
+                        <small><time>2022-01-01</time></small>
                         <p>
                             Lorem ipsum dolor sit amet consectetur adipiscin
                             Lorem ipsum dolor sit amet
@@ -67,9 +76,9 @@
                     </div>
                 </li>
                 <li>
-                    <div>
+                    <div class="row">
+                        <strong>Minju2</strong>
                         <small><time>2022-01-01</time></small>
-                        <strong>Minju</strong>
                         <p>
                             Lorem ipsum dolor sit amet consectetur adipiscin
                             Lorem ipsum dolor sit amet
