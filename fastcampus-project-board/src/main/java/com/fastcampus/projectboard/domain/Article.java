@@ -26,7 +26,7 @@ import java.util.Set;
 @Entity
 public class Article extends AuditingFields {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // mysql의 오토 인크리먼트는 아이덴티티 방식으로 만들어짐
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Setter
@@ -50,7 +50,7 @@ public class Article extends AuditingFields {
     private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
 
     protected Article() {
-    } //jap entity는 hibernate구현체를 사용하는 기준 기본 생성자를 만들어줘야함(public, protected)
+    } //jpa entity는 hibernate구현체를 사용하는 기준 기본 생성자를 만들어줘야함(public, protected)
 
     private Article(UserAccount userAccount, String title, String content, String hashtag) {
         this.userAccount = userAccount;
@@ -66,8 +66,8 @@ public class Article extends AuditingFields {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Article article)) return false;
-        return id != null && id.equals(article.id);
+        if (!(o instanceof Article that)) return false;
+        return id != null && id.equals(that.getId());
     }
 
     @Override

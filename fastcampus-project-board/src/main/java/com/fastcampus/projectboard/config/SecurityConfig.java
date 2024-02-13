@@ -49,7 +49,7 @@ public class SecurityConfig {
                 .findById(username)
                 .map(UserAccountDto::from)
                 .map(BoardPrincipal::from)
-                .orElseThrow(() -> new UsernameNotFoundException("유저를 찾을 수 ㅇ벗습니다 - username : " + username));
+                .orElseThrow(() -> new UsernameNotFoundException("유저를 찾을 수 없습니다 - username : " + username));
     }
 
     @Bean
