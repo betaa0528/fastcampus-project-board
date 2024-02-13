@@ -26,7 +26,7 @@ public abstract class AuditingFields {
     private LocalDateTime createdAt; // 생성일시
     @CreatedBy
     @Column(nullable = false, updatable = false, length = 100)
-    private String createdBy; // 생성자 , 누가 작성했는지에 대한 인증이나 로그인이없음. -> JapConfig에서 설정해준다
+    private String createdBy; // 생성자 , 누가 작성했는지에 대한 인증이나 로그인이없음. -> JpsConfig에서 설정해준다
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @LastModifiedDate
     @Column(nullable = false)

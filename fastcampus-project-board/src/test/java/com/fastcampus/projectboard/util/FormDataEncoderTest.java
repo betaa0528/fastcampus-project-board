@@ -13,8 +13,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("테스트 도구 - Form 데이터 인코더")
-@Import({FormDataEncoder.class, ObjectMapper.class})
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = Void.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = {FormDataEncoder.class, ObjectMapper.class})
 class FormDataEncoderTest {
 
     private final FormDataEncoder formDataEncoder;
@@ -45,7 +44,7 @@ class FormDataEncoderTest {
         // Then
         assertThat(result).isEqualTo(
                 "str=This%20'is'%20%22test%22%20string." +
-                        "&listStr1=%5hello,my,friend%5D" +
+                        "&listStr1=%5Bhello,my,friend%5D" +
                         "&listStr2=hello,my,friend" +
                         "&nullStr" +
                         "&number=1234" +
